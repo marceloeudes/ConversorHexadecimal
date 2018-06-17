@@ -1,3 +1,4 @@
+package conversores;
 public class Operacao {
 
 	public static String somarHexadecimal(String valor1, String valor2) {
