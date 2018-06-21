@@ -1,4 +1,5 @@
 package conversores;
+
 public class Conversor {
 
 	public static String decimalParaHexadecimal(int decimal) {
@@ -6,11 +7,11 @@ public class Conversor {
 	}
 	
 	public static Integer hexadecimalParaDecimal(String hexadecimal) {
-		int valor = 0, posicao = 0;
+		int valor = 0, posicao = hexadecimal.length() - 1;
 		for (char numero : hexadecimal.toCharArray()) {
 			double valorPosicao = Math.pow(16, posicao);
 			valor += caracterHexadecimalParaDecimal(numero) * valorPosicao;
-			posicao++;
+			posicao--;
 		}
 		return valor;
 	}

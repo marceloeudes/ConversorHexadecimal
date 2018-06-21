@@ -15,7 +15,9 @@ public class ConversorLayouts {
 				posicao = posicao * 2;
 				somaBinario = somaBinario + (posicao * Integer.parseInt(String.valueOf(arrayChar[i])));
 			} else {
-				somaBinario = 1;
+				if (arrayChar[i] == '1') {
+					somaBinario = 1;
+				}
 				posicao = 1;
 			}
 			if (i == 11) {
@@ -49,7 +51,7 @@ public class ConversorLayouts {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String obterData(String numero1, String numero2) {
 		String hexadecimal = numero1 + " " + numero2;
 		int somaBinario = 0, posicao = 0;
@@ -61,7 +63,9 @@ public class ConversorLayouts {
 				posicao = posicao * 2;
 				somaBinario = somaBinario + (posicao * Integer.parseInt(String.valueOf(arrayChar[i])));
 			} else {
-				somaBinario = 1;
+				if (arrayChar[i] == '1') {
+					somaBinario = 1;
+				}
 				posicao = 1;
 			}
 			if (i == 11) {
@@ -91,7 +95,29 @@ public class ConversorLayouts {
 		sb.append(ano);
 		return sb.toString();
 	}
-	
+
+	public static String calcularPosicaoGranulo(String tamAreaReservada, String tamFats, String tamDiretorioRaiz,
+			String numGranulo, String tamGranulo) {
+		int tamAreaReservadaDec = Conversor.hexadecimalParaDecimal(tamAreaReservada);
+		int tamFatsDec = Conversor.hexadecimalParaDecimal(tamFats);
+		int tamDiretorioRaizDec = Conversor.hexadecimalParaDecimal(tamDiretorioRaiz);
+		int numGranuloDec = Conversor.hexadecimalParaDecimal(numGranulo);
+		int tamGranuloDec = Conversor.hexadecimalParaDecimal(tamGranulo);
+		int valorFinalDecimal = (tamAreaReservadaDec + tamFatsDec + tamDiretorioRaizDec
+				+ ((numGranuloDec - 2) * tamGranuloDec));
+		return Conversor.decimalParaHexadecimal(valorFinalDecimal);
+	}
+
+	public static String calcularUltimoFragmento(String tamArquivo, int qtdGranulos, String tamGranulo,
+			String posicaoGranulo) {
+		int posicaoGranuloDec = Conversor.hexadecimalParaDecimal(posicaoGranulo);
+		int tamArquivoDec = Conversor.hexadecimalParaDecimal(tamArquivo);
+		int tamGranuloDec = Conversor.hexadecimalParaDecimal(tamGranulo);
+		int qtdBytesUsados = tamArquivoDec - ((qtdGranulos - 1) * tamGranuloDec);
+		int deslocamento = posicaoGranuloDec + qtdBytesUsados - 32;
+		return Conversor.decimalParaHexadecimal(deslocamento);
+	}
+
 	public static char[] inverterHexa(String hexadecimal) {
 		String[] hexaByte = hexadecimal.split(" ");
 		int indice = hexaByte.length - 1;
